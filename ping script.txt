@@ -1,7 +1,13 @@
 --run in powershell
 
-ping 35.192.3.38 /t | % {$_; Start-Sleep -Seconds 30}
+--run this script first to log all the pings
+
+Start-Transcript -path C:\users\kyoung\documents\pinglog.txt -Append  
+
+--run this script to begin pinging (change seconds to appropriate time as needed e.g. 900 for 30 minutes)
+
+ping 35.192.3.38 /t | % {$_; Start-Sleep -Seconds 5}
 
 --times out so testing with loopback
 
-ping 127.0.0.1 /t | % {$_; Start-Sleep -Seconds 30}
+ping 127.0.0.1 /t | % {$_; Start-Sleep -Seconds 5}
