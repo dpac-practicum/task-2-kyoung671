@@ -1,0 +1,15 @@
+import subprocess
+import time
+import logging
+
+#Hit Ctrl + C in shell to stop the script from running and the log file will be generated afterwards
+
+while True:
+    ping = subprocess.check_output(["ping","127.0.0.1","-c","1"])
+    strPing = str(ping)
+    logging.basicConfig(filename = 'ping.log',filemode = 'w',format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+    logger.info(strPing)
+    #adjust number to however many seconds needed e.g. 900 for 30 minutes
+    time.sleep(5)
