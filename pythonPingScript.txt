@@ -2,7 +2,9 @@ import subprocess
 import time
 import logging
 
-#Hit Ctrl + C in shell to stop the script from running and the log file will be generated afterwards
+#Hit Ctrl + C in shell to stop the script from running
+#If you are using Python IDLE you can check the log in real time
+#If you are using Online GDB you have to stop the script before the log can be generated for viewing
 
 def ping():
     ping = subprocess.check_output(["ping","35.192.3.38","-c","1"])
