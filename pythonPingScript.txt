@@ -2,15 +2,17 @@ import subprocess
 import time
 import logging
 
-#Hit Ctrl + C in shell to stop the script from running
+#Run IDLE with elevated priveleges or as administrator in order to properly access subprocess such as ping
 #If you are using Python IDLE you can check the log in real time
 #If you are using Online GDB you have to stop the script before the log can be generated for viewing
+#Hit Ctrl + C in shell to stop the script from running
 
 def ping():
-    ping = subprocess.check_output(["ping","35.192.3.38","-c","1"])
-    strPing = str(ping)
+    #change x.x.x.x value to IP Address you'd like to ping
+    ping = subprocess.run(["ping","-c","1","x.x.x.x"], shell=True, capture_output=True,)
+    strPing = ping.stdout.decode()
     #for filename change to path where you'd like to create your logfile; use '\\' between directories e.g. 'c:\\users\\JohnDoe\\ping.log'
-    logging.basicConfig(filename='PLACE PATH TO LOGFILE HERE',filemode = 'w',format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+    logging.basicConfig(filename='PLACE LOGFILE PATH HERE',filemode = 'w',format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
     logger.info(strPing)
@@ -23,9 +25,9 @@ def run():
             ping()
 
         except subprocess.CalledProcessError as e:
-            strPing = "Host Could not be reached"
+            strPing = "Something has gone terribly wrong"
             #for filename change to path where you'd like to create your logfile; use '\\' between directories e.g. 'c:\\users\\JohnDoe\\ping.log'
-            logging.basicConfig(filename='PLACE PATH TO LOGFILE HERE',filemode= 'w',format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+            logging.basicConfig(filename='PLACE LOGFILE PATH HERE',filemode= 'w',format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
             logger = logging.getLogger(__name__)
             logger.setLevel(logging.DEBUG)
             logger.info(strPing)
