@@ -1,0 +1,52 @@
+'''
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+'''
+
+#Changed the ping function to use 'check_output()' instead of 'run()' for use with onlineGDB
+
+import subprocess
+import time
+import logging
+
+#Run IDLE with elevated priveleges or as administrator in order to properly access subprocess such as ping
+#If you are using Python IDLE you can check the log in real time
+#If you are using Online GDB you have to stop the script before the log can be generated for viewing
+#Hit Ctrl + C in shell to stop the script from running
+
+def ping():
+    #change x.x.x.x value to IP Address you'd like to ping
+    ping = subprocess.check_output(["ping","-c","1","35.192.3.38"])
+    strPing = str(ping)
+    #for filename change to path where you'd like to create your logfile; use '\\' between directories e.g. 'c:\\users\\JohnDoe\\ping.log'
+    logging.basicConfig(filename='ping.log',filemode = 'w',format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+    logger.info(strPing)
+    #adjust number to however many seconds needed e.g. 900 for 30 minutes
+    time.sleep(5)
+
+def run(): 
+    while True:
+        try:
+            ping()
+
+        except subprocess.CalledProcessError as e:
+            strPing = "The host could not be reached"
+            #for filename change to path where you'd like to create your logfile; use '\\' between directories e.g. 'c:\\users\\JohnDoe\\ping.log'
+            logging.basicConfig(filename='ping.log',filemode= 'w',format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+            logger = logging.getLogger(__name__)
+            logger.setLevel(logging.DEBUG)
+            logger.info(strPing)
+            #adjust number to however many seconds needed e.g. 900 for 30 minutes
+            time.sleep(5)
+            return "Go"
+
+goAgain = run()
+
+while goAgain == "Go":
+    goAgain = run()
